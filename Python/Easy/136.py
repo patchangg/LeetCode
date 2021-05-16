@@ -9,3 +9,7 @@ def singleNumber(nums):
     for key,value in dict.items():
         if value == 1:
             return key
+
+nums = [2,2,1,3,3]
+single = singleNumber(nums)
+print(single)
