@@ -13,10 +13,10 @@ class MyLinkedList:
 
     # Go through the nodes starting from the head until index is reached.
     def get(self, index: int) -> int:
-        if index >= self.size:
+        if index < 0 or index >= self.size:
             return -1
 
-        if self.head == None:
+        if self.head is None:
             return -1
 
         curr = self.head
@@ -26,37 +26,29 @@ class MyLinkedList:
 
     # Use the head of the linked list, create a new node, make it point to
     # the current head and make it the new head of the linked list
-    def addAtHead(self, val: int) -> None:
-        node = Node(val)
-        node.next = self.head
-        self.head = node
-        self.size += 1
+    def addAtTail(self, val: int) -> None:
+        self.addAtIndex(0, val)
 
     # Go through the linked list until the end and make it point to the new node
     def addAtTail(self, val: int) -> None:
-        curr = self.head
-        if not curr:
-            self.head = Node(val)
-        else:
-            while curr.next is not None:
-                curr = curr.next
-            curr.next = Node(val)
-        self.size += 1
+        self.addAtIndex(self.size, val)
 
     # Go through the linked list until the index, create the new node and make
     # the current nodes next be the new nodes next and make the current node
     # point to the new node
     def addAtIndex(self, index: int, val: int) -> None:
-        if index >= self.size:
+        if index > self.size:
             return
 
         curr = self.head
-        if index == 0:
-            self.addAtHead(val)
+        node = Node(val)
+
+        if index <= 0:
+            node.next = curr
+            self.head = node
         else:
             for i in range(index - 1):
                 curr = curr.next
-            node = Node(val)
             node.next = curr.next
             curr.next = node
         self.size += 1
@@ -64,8 +56,8 @@ class MyLinkedList:
     # Go through the linked list until the index, make the current node point
     # to the next nodes next to remove the next node from the linked list.
     def deleteAtIndex(self, index: int) -> None:
-        if index >= self.size:
-            return
+        if index < 0 or index >= self.size:
+            return -1
 
         curr = self.head
         if index == 0:
